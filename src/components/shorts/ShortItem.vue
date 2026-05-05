@@ -1,5 +1,4 @@
 <script setup>
-import { useRouter } from 'vue-router'
 import { Play, Heart, MessageCircle, Bookmark, Share2 } from 'lucide-vue-next'
 import { useUiStore } from '../../stores/ui.js'
 
@@ -8,7 +7,6 @@ const props = defineProps({
   media: { type: Object, required: true },
 })
 
-const router = useRouter()
 const uiStore = useUiStore()
 
 function starsFor(rating) {
@@ -17,108 +15,118 @@ function starsFor(rating) {
 </script>
 
 <template>
-  <div class="h-[calc(100vh-60px)] relative overflow-hidden bg-black snap-start">
-    <!-- Blurred background emoji -->
-    <div
-      class="absolute inset-0 flex items-center justify-center
-             text-[12rem] blur-3xl opacity-30 scale-150 pointer-events-none select-none"
-    >
-      {{ media.emoji }}
-    </div>
+  <!-- Full viewport slide -->
+  <div class="h-[calc(100vh-60px)] bg-black snap-start flex items-center justify-center relative">
 
-    <!-- Center play button -->
-    <div class="absolute inset-0 flex flex-col items-center justify-center gap-4">
-      <button
-        class="w-[72px] h-[72px] rounded-full bg-white/12 border-2 border-white/25
-               flex items-center justify-center backdrop-blur-sm
-               hover:bg-white/20 transition-colors cursor-pointer"
-      >
-        <Play :size="28" class="text-white ml-1" />
-      </button>
-    </div>
+    <!-- Player + controls row -->
+    <div class="flex items-end gap-3 w-full justify-center px-4">
 
-    <!-- Right action column -->
-    <div class="absolute right-4 bottom-24 flex flex-col gap-6 items-center">
-      <div class="flex flex-col items-center gap-1.5 cursor-pointer">
+      <!-- Player (9:16) -->
+      <div class="relative w-full max-w-[400px] aspect-[9/16] rounded-2xl overflow-hidden flex-shrink-0">
+        <!-- Blurred emoji background -->
         <div
-          class="w-11 h-11 rounded-full bg-white/10 border border-white/15
-                 flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
-        >
-          <Heart :size="20" class="text-white" />
-        </div>
-        <span class="text-[0.7rem] text-white/60">{{ short.likes }}</span>
-      </div>
-
-      <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-        <div
-          class="w-11 h-11 rounded-full bg-white/10 border border-white/15
-                 flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
-        >
-          <MessageCircle :size="20" class="text-white" />
-        </div>
-        <span class="text-[0.7rem] text-white/60">{{ short.comments }}</span>
-      </div>
-
-      <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-        <div
-          class="w-11 h-11 rounded-full bg-white/10 border border-white/15
-                 flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
-        >
-          <Bookmark :size="20" class="text-white" />
-        </div>
-        <span class="text-[0.7rem] text-white/60">{{ short.saves }}</span>
-      </div>
-
-      <div class="flex flex-col items-center gap-1.5 cursor-pointer">
-        <div
-          class="w-11 h-11 rounded-full bg-white/10 border border-white/15
-                 flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
-        >
-          <Share2 :size="20" class="text-white" />
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom left info -->
-    <div class="absolute left-4 right-16 bottom-6">
-      <!-- Mini poster + media info -->
-      <div
-        class="flex items-center gap-2.5 mb-2.5 cursor-pointer"
-        @click="uiStore.openDetail(media.id)"
-      >
-        <div
-          class="w-[42px] h-[60px] rounded-md bg-surface2 flex items-center justify-center
-                 text-2xl border-[1.5px] border-white/20 flex-shrink-0"
+          class="absolute inset-0 flex items-center justify-center
+                 text-[10rem] blur-3xl opacity-30 scale-150 pointer-events-none select-none"
         >
           {{ media.emoji }}
         </div>
-        <div>
-          <div class="text-sm font-semibold text-white leading-snug">{{ media.title }}</div>
-          <div class="text-[0.72rem] text-white/50 mt-0.5">{{ media.type }}</div>
-          <div class="text-[0.72rem] text-accent mt-0.5">{{ starsFor(media.rating) }}</div>
+
+        <!-- Center play button -->
+        <div class="absolute inset-0 flex items-center justify-center z-10">
+          <button
+            class="w-16 h-16 rounded-full bg-white/12 border-2 border-white/25
+                   flex items-center justify-center backdrop-blur-sm
+                   hover:bg-white/20 transition-colors cursor-pointer"
+          >
+            <Play :size="26" class="text-white ml-1" />
+          </button>
+        </div>
+
+        <!-- Bottom info inside player -->
+        <div class="absolute bottom-0 left-0 right-0 z-20 px-4 pb-4 pt-12"
+             style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)">
+          <!-- Mini poster + media info -->
+          <div
+            class="flex items-center gap-2.5 mb-2 cursor-pointer"
+            @click="uiStore.openDetail(media.id)"
+          >
+            <div
+              class="w-[38px] h-[54px] rounded-md bg-surface2 flex items-center justify-center
+                     text-xl border-[1.5px] border-white/20 flex-shrink-0"
+            >
+              {{ media.emoji }}
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-white leading-snug">{{ media.title }}</div>
+              <div class="text-[0.7rem] text-white/50 mt-0.5">{{ media.type }}</div>
+              <div class="text-[0.7rem] text-accent mt-0.5">{{ starsFor(media.rating) }}</div>
+            </div>
+          </div>
+
+          <!-- User -->
+          <div class="flex items-center gap-1.5 mb-1.5">
+            <div
+              class="w-6 h-6 rounded-full bg-surface2 flex items-center justify-center text-sm
+                     border-[1.5px] border-white/20 flex-shrink-0"
+            >
+              {{ short.avatar }}
+            </div>
+            <span class="text-[0.75rem] text-white/70">{{ short.user }}</span>
+          </div>
+
+          <!-- Caption -->
+          <p class="text-[0.8rem] text-white/80 leading-relaxed line-clamp-2">
+            {{ short.caption }}
+          </p>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="absolute bottom-0 left-0 right-0 h-[3px] bg-white/15 z-30">
+          <div class="h-full bg-accent rounded-full" :style="{ width: short.progress + '%' }" />
         </div>
       </div>
 
-      <!-- Caption -->
-      <p class="text-[0.82rem] text-white/80 leading-relaxed mb-3 line-clamp-2">
-        {{ short.caption }}
-      </p>
-
-      <!-- User -->
-      <div class="flex items-center gap-2">
-        <div
-          class="w-7 h-7 rounded-full bg-surface2 flex items-center justify-center text-sm
-                 border-[1.5px] border-white/20"
-        >
-          {{ short.avatar }}
+      <!-- Controls column (right of player) -->
+      <div class="flex flex-col gap-5 items-center pb-8">
+        <div class="flex flex-col items-center gap-1 cursor-pointer">
+          <div
+            class="w-11 h-11 rounded-full bg-white/10 border border-white/15
+                   flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
+          >
+            <Heart :size="20" class="text-white" />
+          </div>
+          <span class="text-[0.65rem] text-white/60">{{ short.likes }}</span>
         </div>
-        <span class="text-[0.78rem] text-white/70">{{ short.user }}</span>
-      </div>
-    </div>
 
-    <!-- Progress bar -->
-    <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-white/15">
-      <div class="h-full bg-accent" :style="{ width: short.progress + '%' }" />
+        <div class="flex flex-col items-center gap-1 cursor-pointer">
+          <div
+            class="w-11 h-11 rounded-full bg-white/10 border border-white/15
+                   flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
+          >
+            <MessageCircle :size="20" class="text-white" />
+          </div>
+          <span class="text-[0.65rem] text-white/60">{{ short.comments }}</span>
+        </div>
+
+        <div class="flex flex-col items-center gap-1 cursor-pointer">
+          <div
+            class="w-11 h-11 rounded-full bg-white/10 border border-white/15
+                   flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
+          >
+            <Bookmark :size="20" class="text-white" />
+          </div>
+          <span class="text-[0.65rem] text-white/60">{{ short.saves }}</span>
+        </div>
+
+        <div class="flex flex-col items-center gap-1 cursor-pointer">
+          <div
+            class="w-11 h-11 rounded-full bg-white/10 border border-white/15
+                   flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
+          >
+            <Share2 :size="20" class="text-white" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

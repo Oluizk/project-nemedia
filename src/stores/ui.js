@@ -5,6 +5,7 @@ export const useUiStore = defineStore('ui', {
     isModalOpen: false,
     detailPanelMediaId: null,
     activeFilter: 'all',
+    searchQuery: '',
     toast: { visible: false, message: '' },
   }),
 
@@ -25,6 +26,10 @@ export const useUiStore = defineStore('ui', {
 
     setFilter(type) {
       this.activeFilter = type
+    },
+
+    setSearch(query) {
+      this.searchQuery = query
     },
 
     showToast(message) {

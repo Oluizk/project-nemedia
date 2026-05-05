@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { Bookmark, Clapperboard } from 'lucide-vue-next'
+import { Bookmark, Clapperboard, Play } from 'lucide-vue-next'
 import { useUiStore } from '../stores/ui.js'
 
 const props = defineProps({
@@ -10,6 +10,14 @@ const props = defineProps({
 const router = useRouter()
 const uiStore = useUiStore()
 
+const typeColors = {
+  filme:   'bg-blue-500/20 text-blue-300',
+  série:   'bg-purple-500/20 text-purple-300',
+  livro:   'bg-green-500/20 text-green-300',
+  podcast: 'bg-orange-500/20 text-orange-300',
+  vídeo:   'bg-red-500/20 text-red-300',
+}
+
 function starsFor(rating) {
   return '★'.repeat(rating) + '☆'.repeat(5 - rating)
 }
@@ -17,65 +25,63 @@ function starsFor(rating) {
 
 <template>
   <div
-    class="group bg-surface border border-border rounded-xl overflow-hidden cursor-pointer
-           transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl hover:border-accent/30"
+    class="group cursor-pointer"
+    @click="uiStore.openDetail(item.id)"
   >
-    <!-- Poster -->
-    <div class="relative aspect-[2/3] bg-surface2 flex items-center justify-center overflow-hidden">
-      <!-- Blurred bg emoji -->
-      <span class="absolute inset-0 flex items-center justify-center text-8xl opacity-15 blur-sm pointer-events-none select-none">
+    <!-- Thumbnail (16:9) -->
+    <div class="relative aspect-video bg-surface2 rounded-xl overflow-hidden">
+      <!-- Blurred emoji background -->
+      <span
+        class="absolute inset-0 flex items-center justify-center text-[6rem] opacity-20 blur-xl
+               pointer-events-none select-none scale-150"
+      >
         {{ item.emoji }}
       </span>
 
       <!-- Main emoji -->
-      <span class="relative z-10 text-5xl select-none">{{ item.emoji }}</span>
-
-      <!-- Type badge -->
-      <span class="absolute top-1.5 left-1.5 bg-bg/85 backdrop-blur text-muted text-[0.6rem]
-                   font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded">
-        {{ item.type }}
+      <span class="absolute inset-0 flex items-center justify-center text-5xl select-none z-10">
+        {{ item.emoji }}
       </span>
 
       <!-- Clip badge -->
       <span
         v-if="item.hasClip"
-        class="absolute bottom-1.5 right-1.5 bg-danger/90 text-white text-[0.6rem]
+        class="absolute bottom-2 right-2 z-20 bg-danger/90 text-white text-[0.6rem]
                font-bold px-1.5 py-0.5 rounded flex items-center gap-1"
       >
         <Clapperboard :size="10" />
         clipe
       </span>
 
-      <!-- Hover overlay -->
+      <!-- Hover overlay with play button -->
       <div
-        class="absolute inset-0 bg-bg/90 opacity-0 group-hover:opacity-100 transition-opacity
-               duration-200 flex flex-col items-center justify-center gap-2 z-20"
+        class="absolute inset-0 bg-bg/70 opacity-0 group-hover:opacity-100 transition-opacity
+               duration-200 flex items-center justify-center z-30"
       >
-        <button
-          class="bg-accent text-bg border-none px-4 py-1.5 rounded-md text-xs font-bold
-                 cursor-pointer w-4/5 transition-opacity hover:opacity-90"
-          @click.stop="uiStore.openDetail(item.id)"
+        <div
+          class="w-12 h-12 rounded-full bg-white/15 border-2 border-white/30 backdrop-blur-sm
+                 flex items-center justify-center"
         >
-          Ver detalhes
-        </button>
-        <button
-          v-if="item.hasClip"
-          class="bg-transparent text-text border border-border px-4 py-1.5 rounded-md
-                 text-xs font-medium cursor-pointer w-4/5 hover:border-muted transition-colors"
-          @click.stop="router.push('/clipes')"
-        >
-          Ver clipes
-        </button>
+          <Play :size="20" class="text-white ml-0.5" />
+        </div>
       </div>
     </div>
 
     <!-- Card body -->
-    <div class="p-2.5">
-      <div class="text-[0.82rem] font-semibold leading-snug mb-0.5 truncate">{{ item.title }}</div>
-      <div class="text-[0.7rem] text-muted mb-1.5 truncate">{{ item.meta }}</div>
-      <div class="flex justify-between items-center">
-        <span class="text-accent text-[0.65rem]">{{ starsFor(item.rating) }}</span>
-        <span class="text-[0.65rem] text-muted flex items-center gap-0.5">
+    <div class="mt-2">
+      <h3 class="font-semibold text-sm leading-snug line-clamp-2 mb-1">{{ item.title }}</h3>
+      <div class="flex items-center gap-1.5 text-xs text-muted mb-1 flex-wrap">
+        <span>{{ item.meta }}</span>
+        <span
+          class="inline-block text-[0.6rem] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded"
+          :class="typeColors[item.type] || 'bg-surface2 text-muted'"
+        >
+          {{ item.type }}
+        </span>
+      </div>
+      <div class="flex items-center gap-3 text-xs">
+        <span class="text-accent text-[0.7rem]">{{ starsFor(item.rating) }}</span>
+        <span class="text-muted flex items-center gap-0.5">
           <Bookmark :size="10" />
           {{ item.saves.toLocaleString('pt-BR') }}
         </span>

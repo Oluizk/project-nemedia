@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ArrowRight } from 'lucide-vue-next'
-import MediaCard from '../components/MediaCard.vue'
+import MediaCardPortrait from '../components/MediaCardPortrait.vue'
 import { useCatalogStore } from '../stores/catalog.js'
 import { useUiStore } from '../stores/ui.js'
 
@@ -52,7 +52,7 @@ const floatingCards = [
         <button
           class="bg-accent text-bg border-none px-7 py-3 rounded-lg text-sm font-semibold
                  cursor-pointer transition-all hover:-translate-y-0.5 hover:opacity-90"
-          @click="router.push('/catalogo')"
+          @click="router.push('/descobrir')"
         >
           Explorar catálogo
         </button>
@@ -117,13 +117,13 @@ const floatingCards = [
       </h2>
       <button
         class="flex items-center gap-1 text-muted text-xs hover:text-accent transition-colors cursor-pointer"
-        @click="router.push('/catalogo')"
+        @click="router.push('/descobrir')"
       >
         Ver tudo <ArrowRight :size="12" />
       </button>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
-      <MediaCard
+      <MediaCardPortrait
         v-for="item in catalogStore.trending"
         :key="item.id"
         :item="item"
@@ -145,7 +145,7 @@ const floatingCards = [
       </button>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
-      <MediaCard
+      <MediaCardPortrait
         v-for="item in catalogStore.withClips"
         :key="item.id"
         :item="item"
