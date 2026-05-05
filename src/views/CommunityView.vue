@@ -20,18 +20,18 @@ function getMedia(mediaId) {
         Veja o que os membros estão descobrindo e compartilhando agora.
       </p>
 
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col">
         <div
           v-for="activity in catalogStore.activities"
           :key="activity.id"
-          class="flex items-start gap-4 bg-surface border border-border rounded-xl p-4"
+          class="flex items-start gap-4 py-4 border-b border-border/50"
         >
           <!-- Avatar -->
           <div
-            class="w-9 h-9 rounded-full bg-surface2 flex items-center justify-center text-base
-                   border border-border flex-shrink-0"
+            class="w-9 h-9 rounded-full bg-surface2 flex items-center justify-center text-xs
+                   font-semibold text-muted flex-shrink-0"
           >
-            {{ activity.avatar }}
+            {{ activity.user.charAt(0).toUpperCase() }}
           </div>
 
           <!-- Content -->
@@ -48,8 +48,8 @@ function getMedia(mediaId) {
               @click="uiStore.openDetail(activity.mediaId)"
             >
               <div
-                class="w-[30px] h-[42px] rounded bg-surface2 flex items-center justify-center
-                       text-base border border-border flex-shrink-0"
+                class="w-[30px] h-[42px] rounded-md bg-surface2 flex items-center justify-center
+                       text-base flex-shrink-0"
               >
                 {{ getMedia(activity.mediaId).emoji }}
               </div>
@@ -62,9 +62,10 @@ function getMedia(mediaId) {
                 </div>
               </div>
             </div>
-
-            <div class="text-[0.68rem] text-muted mt-2">{{ activity.time }}</div>
           </div>
+
+          <!-- Timestamp -->
+          <div class="text-xs text-muted flex-shrink-0">{{ activity.time }}</div>
         </div>
       </div>
     </div>

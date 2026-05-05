@@ -8,10 +8,6 @@ const props = defineProps({
 })
 
 const uiStore = useUiStore()
-
-function starsFor(rating) {
-  return '★'.repeat(rating) + '☆'.repeat(5 - rating)
-}
 </script>
 
 <template>
@@ -52,26 +48,20 @@ function starsFor(rating) {
           >
             <div
               class="w-[38px] h-[54px] rounded-md bg-surface2 flex items-center justify-center
-                     text-xl border-[1.5px] border-white/20 flex-shrink-0"
+                     text-xl flex-shrink-0"
             >
               {{ media.emoji }}
             </div>
             <div>
               <div class="text-sm font-semibold text-white leading-snug">{{ media.title }}</div>
               <div class="text-[0.7rem] text-white/50 mt-0.5">{{ media.type }}</div>
-              <div class="text-[0.7rem] text-accent mt-0.5">{{ starsFor(media.rating) }}</div>
+              <div class="text-[0.7rem] text-accent mt-0.5">★ {{ media.rating }}</div>
             </div>
           </div>
 
           <!-- User -->
           <div class="flex items-center gap-1.5 mb-1.5">
-            <div
-              class="w-6 h-6 rounded-full bg-surface2 flex items-center justify-center text-sm
-                     border-[1.5px] border-white/20 flex-shrink-0"
-            >
-              {{ short.avatar }}
-            </div>
-            <span class="text-[0.75rem] text-white/70">{{ short.user }}</span>
+            <span class="text-[0.75rem] text-white/60">{{ short.user }}</span>
           </div>
 
           <!-- Caption -->
@@ -81,7 +71,7 @@ function starsFor(rating) {
         </div>
 
         <!-- Progress bar -->
-        <div class="absolute bottom-0 left-0 right-0 h-[3px] bg-white/15 z-30">
+        <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-white/15 z-30">
           <div class="h-full bg-accent rounded-full" :style="{ width: short.progress + '%' }" />
         </div>
       </div>
@@ -89,42 +79,22 @@ function starsFor(rating) {
       <!-- Controls column (right of player) -->
       <div class="flex flex-col gap-5 items-center pb-8">
         <div class="flex flex-col items-center gap-1 cursor-pointer">
-          <div
-            class="w-11 h-11 rounded-full bg-white/10 border border-white/15
-                   flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
-          >
-            <Heart :size="20" class="text-white" />
-          </div>
+          <Heart :size="22" class="text-white" />
           <span class="text-[0.65rem] text-white/60">{{ short.likes }}</span>
         </div>
 
         <div class="flex flex-col items-center gap-1 cursor-pointer">
-          <div
-            class="w-11 h-11 rounded-full bg-white/10 border border-white/15
-                   flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
-          >
-            <MessageCircle :size="20" class="text-white" />
-          </div>
+          <MessageCircle :size="22" class="text-white" />
           <span class="text-[0.65rem] text-white/60">{{ short.comments }}</span>
         </div>
 
         <div class="flex flex-col items-center gap-1 cursor-pointer">
-          <div
-            class="w-11 h-11 rounded-full bg-white/10 border border-white/15
-                   flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
-          >
-            <Bookmark :size="20" class="text-white" />
-          </div>
+          <Bookmark :size="22" class="text-white" />
           <span class="text-[0.65rem] text-white/60">{{ short.saves }}</span>
         </div>
 
         <div class="flex flex-col items-center gap-1 cursor-pointer">
-          <div
-            class="w-11 h-11 rounded-full bg-white/10 border border-white/15
-                   flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors"
-          >
-            <Share2 :size="20" class="text-white" />
-          </div>
+          <Share2 :size="22" class="text-white" />
         </div>
       </div>
     </div>

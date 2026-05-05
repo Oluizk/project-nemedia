@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ArrowRight } from 'lucide-vue-next'
+import { ArrowRight, Play } from 'lucide-vue-next'
 import MediaCardPortrait from '../components/MediaCardPortrait.vue'
 import { useCatalogStore } from '../stores/catalog.js'
 import { useUiStore } from '../stores/ui.js'
@@ -36,7 +36,7 @@ const floatingCards = [
                px-3 py-1.5 rounded-full mb-5 border border-accent/25
                tracking-wider uppercase"
       >
-        🌍 Curado pela comunidade
+        Curado pela comunidade
       </div>
 
       <h1 class="font-serif text-[clamp(2.4rem,5vw,3.8rem)] leading-[1.15] mb-4">
@@ -57,11 +57,12 @@ const floatingCards = [
           Explorar catálogo
         </button>
         <button
-          class="bg-transparent text-text border border-border px-7 py-3 rounded-lg
+          class="flex items-center gap-2 bg-transparent text-text border border-border px-7 py-3 rounded-lg
                  text-sm font-medium cursor-pointer transition-colors hover:border-muted"
           @click="router.push('/clipes')"
         >
-          ▶ Ver clipes
+          <Play :size="14" />
+          Ver clipes
         </button>
       </div>
 
