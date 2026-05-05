@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { Search, Plus } from 'lucide-vue-next'
 import MediaCard from '../components/MediaCard.vue'
 import FilterBar from '../components/FilterBar.vue'
@@ -9,29 +9,17 @@ import { useUiStore } from '../stores/ui.js'
 const catalogStore = useCatalogStore()
 const uiStore = useUiStore()
 
-const localSearch = ref('')
-
 const filtered = computed(() => {
-  let items = catalogStore.catalog
+  // Start with text-searched results via store getter
+  let items = catalogStore.search(uiStore.searchQuery)
 
-  // Filter by type or special filters
+  // Apply type / special filters
   if (uiStore.activeFilter === 'hasClip') {
     items = items.filter((i) => i.hasClip)
   } else if (uiStore.activeFilter === 'saved') {
     items = [...items].sort((a, b) => b.saves - a.saves)
   } else if (uiStore.activeFilter !== 'all') {
     items = items.filter((i) => i.type === uiStore.activeFilter)
-  }
-
-  // Apply text search
-  const q = localSearch.value.trim().toLowerCase()
-  if (q) {
-    items = items.filter(
-      (i) =>
-        i.title.toLowerCase().includes(q) ||
-        i.meta.toLowerCase().includes(q) ||
-        i.type.toLowerCase().includes(q)
-    )
   }
 
   return items
@@ -49,11 +37,12 @@ const filtered = computed(() => {
         >
           <Search :size="16" class="text-muted flex-shrink-0" />
           <input
-            v-model="localSearch"
+            :value="uiStore.searchQuery"
             type="text"
             placeholder="Buscar títulos, criadores..."
             class="flex-1 bg-transparent border-none outline-none text-sm text-text
                    placeholder:text-muted/60 min-w-0"
+            @input="uiStore.setSearch($event.target.value)"
           />
         </div>
       </div>
