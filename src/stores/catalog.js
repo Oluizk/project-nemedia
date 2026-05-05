@@ -17,6 +17,17 @@ export const useCatalogStore = defineStore('catalog', {
       if (!type || type === 'all') return state.catalog
       return state.catalog.filter((item) => item.type === type)
     },
+
+    search: (state) => (query) => {
+      if (!query || !query.trim()) return state.catalog
+      const q = query.toLowerCase()
+      return state.catalog.filter(
+        (item) =>
+          item.title.toLowerCase().includes(q) ||
+          item.meta.toLowerCase().includes(q) ||
+          item.type.toLowerCase().includes(q)
+      )
+    },
   },
 
   actions: {
