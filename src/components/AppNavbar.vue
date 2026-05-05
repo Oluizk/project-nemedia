@@ -59,12 +59,10 @@ function closeMenu() {
     <!-- Desktop right actions -->
     <div class="hidden sm:flex items-center gap-3">
       <button
-        class="flex items-center gap-1.5 border border-border bg-transparent text-text
-               px-4 py-1.5 rounded-md text-xs cursor-pointer transition-all duration-200
-               hover:border-accent hover:bg-accent/7"
+        class="flex items-center gap-1.5 text-sm text-muted hover:text-text transition-colors cursor-pointer bg-transparent border-none"
         @click="uiStore.openModal()"
       >
-        <Plus :size="14" />
+        <Plus :size="16" />
         Adicionar
       </button>
       <button

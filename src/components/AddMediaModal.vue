@@ -71,14 +71,13 @@ function handleSubmit() {
         <Transition name="scale">
           <div
             v-if="uiStore.isModalOpen"
-            class="bg-surface border border-border rounded-2xl p-8 w-full max-w-[480px]
+            class="bg-surface rounded-2xl p-6 w-full max-w-[460px]
                    shadow-2xl relative"
           >
             <!-- Close button -->
             <button
               class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center
-                     bg-surface2 border border-border rounded-full text-muted
-                     hover:text-text hover:border-accent/50 transition-colors cursor-pointer"
+                     text-muted hover:text-text transition-colors cursor-pointer bg-transparent border-none"
               @click="uiStore.closeModal()"
             >
               <X :size="16" />
@@ -94,9 +93,9 @@ function handleSubmit() {
                   <label class="block text-muted text-[0.78rem] font-medium mb-1.5">Tipo</label>
                   <select
                     v-model="form.type"
-                    class="w-full bg-bg border border-border rounded-lg px-3 py-2.5
-                           text-text text-[0.85rem] outline-none focus:border-accent
-                           transition-colors"
+                    class="w-full bg-surface2 rounded-lg px-3 py-2.5
+                           text-text text-[0.85rem] outline-none focus:ring-1 focus:ring-accent
+                           transition-all"
                   >
                     <option
                       v-for="opt in typeOptions"
@@ -117,9 +116,9 @@ function handleSubmit() {
                     type="number"
                     min="1"
                     max="5"
-                    class="w-full bg-bg border border-border rounded-lg px-3 py-2.5
-                           text-text text-[0.85rem] outline-none focus:border-accent
-                           transition-colors"
+                    class="w-full bg-surface2 rounded-lg px-3 py-2.5
+                           text-text text-[0.85rem] outline-none focus:ring-1 focus:ring-accent
+                           transition-all"
                   />
                 </div>
               </div>
@@ -133,9 +132,9 @@ function handleSubmit() {
                   v-model="form.title"
                   type="text"
                   placeholder="Ex: Inception"
-                  class="w-full bg-bg border border-border rounded-lg px-3 py-2.5
-                         text-text text-[0.85rem] outline-none focus:border-accent
-                         transition-colors placeholder:text-muted/50"
+                  class="w-full bg-surface2 rounded-lg px-3 py-2.5
+                         text-text text-[0.85rem] outline-none focus:ring-1 focus:ring-accent
+                         transition-all placeholder:text-muted/50"
                   required
                 />
               </div>
@@ -149,9 +148,9 @@ function handleSubmit() {
                   v-model="form.meta"
                   type="text"
                   placeholder="Ex: Christopher Nolan · 2010"
-                  class="w-full bg-bg border border-border rounded-lg px-3 py-2.5
-                         text-text text-[0.85rem] outline-none focus:border-accent
-                         transition-colors placeholder:text-muted/50"
+                  class="w-full bg-surface2 rounded-lg px-3 py-2.5
+                         text-text text-[0.85rem] outline-none focus:ring-1 focus:ring-accent
+                         transition-all placeholder:text-muted/50"
                 />
               </div>
 
@@ -162,9 +161,9 @@ function handleSubmit() {
                   v-model="form.description"
                   rows="3"
                   placeholder="Breve descrição do título..."
-                  class="w-full bg-bg border border-border rounded-lg px-3 py-2.5
-                         text-text text-[0.85rem] outline-none focus:border-accent
-                         transition-colors resize-y placeholder:text-muted/50"
+                  class="w-full bg-surface2 rounded-lg px-3 py-2.5
+                         text-text text-[0.85rem] outline-none focus:ring-1 focus:ring-accent
+                         transition-all resize-y placeholder:text-muted/50"
                 />
               </div>
 
@@ -177,9 +176,9 @@ function handleSubmit() {
                   v-model="form.clipUrl"
                   type="url"
                   placeholder="https://..."
-                  class="w-full bg-bg border border-border rounded-lg px-3 py-2.5
-                         text-text text-[0.85rem] outline-none focus:border-accent
-                         transition-colors placeholder:text-muted/50"
+                  class="w-full bg-surface2 rounded-lg px-3 py-2.5
+                         text-text text-[0.85rem] outline-none focus:ring-1 focus:ring-accent
+                         transition-all placeholder:text-muted/50"
                 />
               </div>
 
@@ -187,8 +186,7 @@ function handleSubmit() {
               <div class="flex gap-3 justify-end">
                 <button
                   type="button"
-                  class="border border-border bg-transparent text-text px-5 py-2 rounded-lg
-                         text-xs cursor-pointer hover:border-muted transition-colors"
+                  class="text-muted text-sm hover:text-text transition-colors cursor-pointer bg-transparent border-none"
                   @click="uiStore.closeModal()"
                 >
                   Cancelar

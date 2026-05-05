@@ -32,8 +32,8 @@ const filtered = computed(() => {
       <!-- Search bar -->
       <div class="py-6 max-w-xl mx-auto">
         <div
-          class="flex items-center gap-2 bg-surface2 border border-border rounded-full px-4 py-2.5
-                 transition-colors focus-within:border-accent"
+          class="flex items-center gap-2 bg-surface2 rounded-full px-4 py-2.5
+                 transition-all focus-within:ring-1 focus-within:ring-accent"
         >
           <Search :size="16" class="text-muted flex-shrink-0" />
           <input
